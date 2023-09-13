@@ -1,40 +1,38 @@
 import 'dart:ui';
 import 'Database.dart';
 
-class User{
+class User {
   static late String _email;
   static late String _password;
   static late String _username;
   static late Image _profilePicture;
+  static bool _isConnected = false;
 
-  User(String email, String username, String password, Image profilePicture){
+  User(String email, String username, String password) {
     _email = email;
     _username = username;
     _password = password;
-    _profilePicture = profilePicture;
+    //_profilePicture = profilePicture;
+    _isConnected = true;
   }
 
-  /*static Future<void> insert(String email, String username, String password, Image profilePicture) async {
-    final db = Database();
-    if (db == null || !db.isConnected) {
+  bool get isConnected => _isConnected;
+
+  static Future<void> register(String email, String username, String password) async {
+    final db = await Database.connect();
+    if (db == null) {
       print('La base de données n\'est pas connectée.');
       return;
     }
 
-    try {
-      var collection = _db.collection("users");
-      await collection.insert({
-        'email': email,
-        'username': username,
-        'password': password,
-        'profilePicture': profilePicture,
-      });
+    var collection = db.collection("users");
+    await collection.insert({
+      'email': email,
+      'username': username,
+      'password': password,
+      //'profilePicture': profilePicture.toString(),
+    });
 
-      User(email, username, password, profilePicture);
-      print("Insert successful !");
-    } catch (e) {
-      print('Erreur lors de la connexion à la base de données : $e');
-    }
-  }*/
-
+    User(email, username, password);
+  }
 }

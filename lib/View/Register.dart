@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_flutter/Controller/IdentificationController.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.title});
+
   final String title;
 
   @override
@@ -15,7 +16,8 @@ class _RegisterState extends State<Register> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
-  final profilePictureController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +53,7 @@ class _RegisterState extends State<Register> {
                 decoration: const InputDecoration(labelText: 'Username'),
               ),
               TextFormField(
-                controller: usernameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(labelText: 'Profile Picture'),
-              ),
-              TextFormField(
-                controller: usernameController,
+                controller: passwordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
@@ -83,7 +75,21 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  if(emailController.text.isNotEmpty && usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                    if (IdentificationController.RegisterUser(
+                        emailController.text, usernameController.text,
+                        passwordController.text)) {
+                      Navigator.pushNamed(context, '/');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Erreur lors de l'enregistrement"),
+                        ),
+                      );
+                    }
+                  }
+                },
                 child: const Text('Submit'),
               ),
             ],

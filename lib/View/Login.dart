@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_flutter/Controller/IdentificationController.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});
@@ -57,7 +58,7 @@ class _LoginState extends State<Login> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/register', arguments: 'Ajouter un contact');
+                        Navigator.pushNamed(context, '/register');
                       },
                       child: const Text('Register'),
                     ),
@@ -65,7 +66,9 @@ class _LoginState extends State<Login> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 child: const Text('Submit'),
               ),
             ],

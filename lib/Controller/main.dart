@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_flutter/Model/Database.dart';
 import 'package:project_flutter/View/Login.dart';
 import 'package:project_flutter/View/Register.dart';
+import 'package:project_flutter/Model/UserModel.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Database.connect();
   runApp(const MyApp());
 }
 

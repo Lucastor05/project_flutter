@@ -24,9 +24,10 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       routes: {
-        '/': (context) => Login(title: 'Login'),
+        '/': (context) => const Login(title: 'Login'),
+        '/register': (context) => const Register(title: 'Register'),
       },
-      onGenerateRoute: (settings) {
+      /*onGenerateRoute: (settings) {
         if (settings.name == '/register') {
           final String argument = settings.arguments as String;
           return MaterialPageRoute(
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           );
         }
         return null;
-      },
+      },*/
     );
   }
 }

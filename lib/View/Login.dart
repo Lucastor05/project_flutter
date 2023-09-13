@@ -48,6 +48,22 @@ class _LoginState extends State<Login> {
                 },
                 decoration: const InputDecoration(labelText: 'Password'),
               ),
+              Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Mot de passe oublié'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register', arguments: 'Ajouter un contact');
+                      },
+                      child: const Text('Register'),
+                    ),
+                  ],
+                ),
+              ),
               TextButton(
                 onPressed: () {},
                 child: const Text('Submit'),

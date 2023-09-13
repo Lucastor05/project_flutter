@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_flutter/Model/Database.dart';
-import 'package:project_flutter/View/MyHomePage.dart';
+import 'package:project_flutter/View/Login.dart';
+import 'package:project_flutter/View/Register.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +16,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'project_flutter',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey.shade900),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Login(title: 'Login'),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/register') {
+          final String argument = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => Register(title: argument),
+          );
+        }
+        return null;
+      },
     );
   }
 }

@@ -16,6 +16,8 @@ class Database {
     }
   }
 
+  /*
+
   static Future<void> insert(String name, String phone, String mail) async {
     if (_db == null || !_db.isConnected) {
       print('La base de données n\'est pas connectée.');
@@ -50,6 +52,8 @@ class Database {
       return [];
     }
   }
+
+  */
 
   static Future<void> close() async {
     if (_db != null && _db.isConnected) {

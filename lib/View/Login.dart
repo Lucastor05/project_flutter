@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_flutter/Controller/IdentificationController.dart';
+import 'package:project_flutter/View/ForgottenPassword.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});
@@ -52,10 +53,7 @@ class _LoginState extends State<Login> {
               Center(
                 child: Row(
                   children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Mot de passe oublié'),
-                    ),
+                    const ForgottenPassword(),
                     TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/register');

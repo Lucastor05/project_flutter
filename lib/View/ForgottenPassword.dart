@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Controller/IdentificationController.dart';
 
 class ForgottenPassword extends StatefulWidget {
   const ForgottenPassword({super.key});
@@ -8,6 +9,21 @@ class ForgottenPassword extends StatefulWidget {
 }
 
 class _ForgottenPasswordState extends State<ForgottenPassword> {
+  final _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void close() {
+    emailController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+
+    Navigator.of(context).pop();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +34,56 @@ class _ForgottenPasswordState extends State<ForgottenPassword> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text('Mot de passe oublié'),
-                content: const SingleChildScrollView(
-                  child: ListBody(
+                content: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('Veuillez contacter l\'administrateur du site.'),
+                      TextFormField(
+                        controller: emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(labelText: 'email'),
+                      ),
+                      TextFormField(
+                        controller: usernameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your username';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(labelText: 'Username'),
+                      ),
+                      TextFormField(
+                        controller: passwordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your new password';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(labelText: 'New password'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            if(await IdentificationController.changePassword(emailController.text, usernameController.text, passwordController.text)){
+                              close();
+                            } else {
+                              const Text('Erreur lors du login');
+                            }
+                          }//fin if _formkey.currentState ...
+                        },
+                        child: const Text('Submit'),
+                      ),
                     ],
                   ),
                 ),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
               );
             }
         );

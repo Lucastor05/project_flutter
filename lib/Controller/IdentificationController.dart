@@ -22,5 +22,17 @@ class IdentificationController {
     }
   }
 
+  static Future<bool> changePassword(String email,String username, String password) async{
+    bool userIsChecked = await User.checkUser(email, username);
+
+    if(userIsChecked){
+      User.changePassword(email, username, password);
+      return true;
+    } else {
+      print('Erreur lors du changement de mot de passe');
+      return false;
+    }
+  }
+
 
 }

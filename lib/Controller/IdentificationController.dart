@@ -1,20 +1,21 @@
 import 'package:project_flutter/Model/UserModel.dart';
+import 'dart:io';
 
 class IdentificationController {
 
-  static bool RegisterUser(String email, String username,String password){
-    try{
-      User.register(email, username, password);
+  static Future<bool> RegisterUser(String email, String username, String password, File? profilePicture) async {
+
+    if (await UserManager.register(email, username, password, profilePicture)) {
+      // Connecte automatiquement l'utilisateur après son inscription réussie
       return true;
-    } catch (e) {
-      print('Erreur lors de l\'insertion dans la base de données : $e');
+    } else {
+      print('Erreur lors de l\'insertion dans la base de données');
       return false;
     }
-
   }
 
   static Future<bool> login(String username,String password) async{
-    if(await User.login(username, password)){
+    if(await UserManager.loginUserWithCredentials(username, password)){
       return true;
     } else {
       print('Erreur lors du login');
@@ -23,10 +24,10 @@ class IdentificationController {
   }
 
   static Future<bool> changePassword(String email,String username, String password) async{
-    bool userIsChecked = await User.checkUser(email, username);
+    bool userIsChecked = await UserManager.checkUser(email, username);
 
     if(userIsChecked){
-      User.changePassword(email, username, password);
+      UserManager.changePassword(email, username, password);
       return true;
     } else {
       print('Erreur lors du changement de mot de passe');

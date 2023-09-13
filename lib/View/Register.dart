@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:project_flutter/Controller/IdentificationController.dart';
 import 'package:file_picker/file_picker.dart';
 
-import '../Model/UserModel.dart';
+import '../Controller/IdentificationController.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.title});
@@ -20,16 +21,14 @@ class _RegisterState extends State<Register> {
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
 
-  PlatformFile? _file;
+  File? _imageFile;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
@@ -58,14 +57,27 @@ class _RegisterState extends State<Register> {
                 },
                 decoration: const InputDecoration(labelText: 'Username'),
               ),
+              if (_imageFile != null)
+                Image.file(
+                  _imageFile!,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
               ElevatedButton(
-                  onPressed: () async{
-                    final result = await FilePicker.platform.pickFiles();
-                    if(result == null) return;
+                onPressed: () async {
+                  final result = await FilePicker.platform.pickFiles(
+                    type: FileType.image, // Spécifiez que vous voulez des images
+                  );
+                  if (result == null) return;
 
-                    _file = result.files.first;
-                  },
-                  child: const Text("Pick file")
+                  setState(() {
+                    if (result != null && result.files.isNotEmpty) {
+                      _imageFile = File(result.files.first.path!);
+                    }
+                  });
+                },
+                child: const Text("Sélectionner une image"),
               ),
               TextFormField(
                 controller: passwordController,
@@ -90,19 +102,16 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()){
-                    if (IdentificationController.RegisterUser(
-                        emailController.text, usernameController.text,
-                        passwordController.text)) {
-
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    if (await IdentificationController.RegisterUser(
+                        emailController.text,
+                        usernameController.text,
+                        passwordController.text,
+                        _imageFile)) {
                       Navigator.pushNamed(context, '/home');
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Erreur lors de l'enregistrement"),
-                        ),
-                      );
+                      const Text('Erreur lors du login');
                     }
                   }
                 },

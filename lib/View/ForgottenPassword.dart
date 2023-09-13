@@ -15,14 +15,6 @@ class _ForgottenPasswordState extends State<ForgottenPassword> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void close() {
-    emailController.dispose();
-    usernameController.dispose();
-    passwordController.dispose();
-
-    Navigator.of(context).pop();
-  }
-
 
 
   @override
@@ -73,7 +65,7 @@ class _ForgottenPasswordState extends State<ForgottenPassword> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             if(await IdentificationController.changePassword(emailController.text, usernameController.text, passwordController.text)){
-                              close();
+                              Navigator.of(context).pop();
                             } else {
                               const Text('Erreur lors du login');
                             }

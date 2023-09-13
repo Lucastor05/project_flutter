@@ -10,6 +10,16 @@ class IdentificationController {
       print('Erreur lors de l\'insertion dans la base de données : $e');
       return false;
     }
+
+  }
+
+  static Future<bool> login(String username,String password) async{
+    if(await User.login(username, password)){
+      return true;
+    } else {
+      print('Erreur lors du login');
+      return false;
+    }
   }
 
 

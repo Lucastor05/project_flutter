@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_flutter/View/Home.dart';
 import 'package:project_flutter/View/Login.dart';
 import 'package:project_flutter/View/Register.dart';
-import 'package:project_flutter/Model/UserModel.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Login(title: 'Login'),
         '/register': (context) => const Register(title: 'Register'),
+        '/home': (context) => const Home(title: 'Accueil'),
       },
       /*onGenerateRoute: (settings) {
         if (settings.name == '/register') {

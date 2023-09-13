@@ -66,8 +66,16 @@ class _LoginState extends State<Login> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    if(await IdentificationController.login(usernameController.text, passwordController.text)){
+                      Navigator.pushNamed(context, '/home');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Erreur lors du login')),
+                      );
+                    }
+                  }
                 },
                 child: const Text('Submit'),
               ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_flutter/Controller/IdentificationController.dart';
+import 'package:file_picker/file_picker.dart';
+
+import '../Model/UserModel.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.title});
@@ -17,13 +20,16 @@ class _RegisterState extends State<Register> {
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
 
-
+  PlatformFile? _file;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
@@ -52,6 +58,15 @@ class _RegisterState extends State<Register> {
                 },
                 decoration: const InputDecoration(labelText: 'Username'),
               ),
+              ElevatedButton(
+                  onPressed: () async{
+                    final result = await FilePicker.platform.pickFiles();
+                    if(result == null) return;
+
+                    _file = result.files.first;
+                  },
+                  child: const Text("Pick file")
+              ),
               TextFormField(
                 controller: passwordController,
                 validator: (value) {
@@ -76,11 +91,12 @@ class _RegisterState extends State<Register> {
               ),
               TextButton(
                 onPressed: () {
-                  if(emailController.text.isNotEmpty && usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                  if (_formKey.currentState!.validate()){
                     if (IdentificationController.RegisterUser(
                         emailController.text, usernameController.text,
                         passwordController.text)) {
-                      Navigator.pushNamed(context, '/');
+
+                      Navigator.pushNamed(context, '/home');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

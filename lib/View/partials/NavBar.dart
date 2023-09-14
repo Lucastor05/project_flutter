@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
 
-class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+class NavBar extends StatelessWidget {
+  final List<String> routes;
 
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
-
-class _NavBarState extends State<NavBar> {
-
-  bool isNavBarVisible = false;
-
-  void toggleNavBar() {
-    setState(() {
-      isNavBarVisible = !isNavBarVisible;
-    });
-  }
+  NavBar({required this.routes});
 
   @override
   Widget build(BuildContext context) {
-    return Text("zibve");
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        margin: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.lightBlue.shade200,
+          borderRadius: BorderRadius.all(Radius.circular(24)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            for (int i = 0; i < routes.length; i++)
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/${routes[i]}');
+                },
+                child: SizedBox(
+                  height: 36,
+                  width: 36,
+                  child: Image.asset('assets/images/${routes[i]}.png'),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

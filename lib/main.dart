@@ -25,6 +25,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Login(title: 'Login'),
         '/register': (context) => const Register(title: 'Register'),
         '/home': (context) => const Home(title: 'Accueil'),
+        '/competition': (context) => const Home(title: 'Concours'),
+        '/classes': (context) => const Home(title: 'Cours'),
+        '/parties': (context) => const Home(title: 'Soirées'),
+        '/horses': (context) => const Home(title: 'Chevaux'),
       },
       /*onGenerateRoute: (settings) {
         if (settings.name == '/register') {

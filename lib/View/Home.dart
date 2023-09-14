@@ -10,13 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool isNavBarVisible = false;
-
-  void toggleNavBar() {
-    setState(() {
-      isNavBarVisible = !isNavBarVisible;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +20,7 @@ class _HomeState extends State<Home> {
         title: Text(widget.title),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: toggleNavBar,
-        child: const Icon(Icons.menu),
-      ),
-
-      // Intégrer la barre de navigation ici conditionnellement en fonction de isNavBarVisible
-      body: isNavBarVisible ? const NavBar() : Container(),
+      bottomNavigationBar: NavBar(routes: ["competition", "classes", "parties", "horses"],),
     );
   }
 }

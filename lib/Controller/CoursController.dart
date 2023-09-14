@@ -1,5 +1,4 @@
 import 'package:project_flutter/Model/CoursModel.dart';
-import 'dart:io';
 
 class CoursController {
 

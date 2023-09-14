@@ -1,7 +1,4 @@
 import 'package:project_flutter/Model/ConcoursModel.dart';
-import 'dart:io';
-
-import 'package:project_flutter/Model/UserModel.dart';
 
 class ConcoursController {
 

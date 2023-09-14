@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/ConcoursController.dart';

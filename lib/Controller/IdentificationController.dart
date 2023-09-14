@@ -35,5 +35,7 @@ class IdentificationController {
     }
   }
 
-
+  static Future<List<Map<String, dynamic>>> getFromEmail(String email) async {
+    return await UserManager.getFromEmail(email);
+  }
 }

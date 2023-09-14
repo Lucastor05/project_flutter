@@ -8,6 +8,9 @@ class User {
   late String username;
   late String password;
   late String profilePicture;
+  String phone = "";
+  int? age;
+
 
   User({required this.email, required this.username, required this.password, required this.profilePicture});
 }
@@ -64,6 +67,12 @@ class UserManager {
       return false;
     }
 
+    // Vérifiez d'abord si un utilisateur avec le même email ou le même nom d'utilisateur existe déjà
+    if (await UserManager.checkUser(email, username)) {
+      print('Un utilisateur avec le même email ou nom d\'utilisateur existe déjà.');
+      return false;
+    }
+
     var collection = db.collection("users");
     bool isRegistered = false; // Initialisez la variable à false
 
@@ -73,8 +82,9 @@ class UserManager {
         'username': username,
         'password': password,
         'profilePicture': profilePicturePath,
+        'phone': "",
+        'age': null
       });
-
 
       final user = User(email: email, username: username, password: password, profilePicture: profilePicturePath);
       UserManager.loginUser(user);
@@ -129,5 +139,17 @@ class UserManager {
       print('Erreur lors de la mise à jour de la base de données : $e');
       return false;
     }
+  }
+
+  static Future<List<Map<String, dynamic>>> getFromEmail(String email) async {
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return [];
+    }
+
+    var collection = db.collection("users");
+    var user = await collection.find(where.eq('email', email)).toList();
+    return user;
   }
 }

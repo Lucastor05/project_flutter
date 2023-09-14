@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_flutter/View/Home.dart';
-import 'package:project_flutter/View/Login.dart';
-import 'package:project_flutter/View/Register.dart';
+import 'package:project_flutter/View/Form/Login.dart';
+import 'package:project_flutter/View/Form/Register.dart';
 import 'package:project_flutter/View/Cours.dart';
+import 'package:project_flutter/View/Concours.dart';
+import 'package:project_flutter/View/Form/NewCour.dart';
+import 'package:project_flutter/View/Form/NewConcour.dart';
+import 'package:project_flutter/View/ParticipationConcour.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,20 +31,22 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Login(title: 'Login'),
         '/register': (context) => const Register(title: 'Register'),
         '/home': (context) => const Home(title: 'Accueil'),
-        '/competition': (context) => const Home(title: 'Concours'),
+        '/competition': (context) => const Concours(title: 'Concours'),
         '/classes': (context) => const Cours(title: 'Cours'),
         '/parties': (context) => const Home(title: 'Soirées'),
         '/horses': (context) => const Home(title: 'Chevaux'),
+        '/createConcours': (context) => const NewConcour(title: 'Créer un concour'),
+        '/createCours': (context) => const NewCour(title: 'Créer un concour'),
       },
-      /*onGenerateRoute: (settings) {
-        if (settings.name == '/register') {
+      onGenerateRoute: (settings) {
+        if (settings.name == '/registerConcours') {
           final String argument = settings.arguments as String;
           return MaterialPageRoute(
-            builder: (context) => Register(title: argument),
+            builder: (context) => ParticipationConcours(idConcour: argument),
           );
         }
         return null;
-      },*/
+      },
     );
   }
 }

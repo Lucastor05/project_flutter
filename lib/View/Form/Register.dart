@@ -1,9 +1,9 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 
-import '../Controller/IdentificationController.dart';
+
+import '../../Controller/IdentificationController.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.title});

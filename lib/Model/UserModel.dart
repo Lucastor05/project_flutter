@@ -7,9 +7,9 @@ class User {
   late String email;
   late String username;
   late String password;
-  //File? profilePicture;
+  late String profilePicture;
 
-  User({required this.email, required this.username, required this.password});
+  User({required this.email, required this.username, required this.password, required this.profilePicture});
 }
 
 class UserManager {
@@ -57,7 +57,7 @@ class UserManager {
   }
 
   // Enregistre un nouvel utilisateur dans la base de données
-  static Future<bool> register(String email, String username, String password, File? profilePicture) async {
+  static Future<bool> register(String email, String username, String password, String profilePicturePath) async {
     final db = await Database.connect();
     if (db == null) {
       print('La base de données n\'est pas connectée.');
@@ -72,11 +72,11 @@ class UserManager {
         'email': email,
         'username': username,
         'password': password,
-        'profilePicture': profilePicture?.readAsBytesSync(),
+        'profilePicture': profilePicturePath,
       });
 
 
-      final user = User(email: email, username: username, password: password);
+      final user = User(email: email, username: username, password: password, profilePicture: profilePicturePath);
       UserManager.loginUser(user);
 
       isRegistered = true; // Mettez à jour la variable en cas de succès
@@ -100,28 +100,12 @@ class UserManager {
 
     if (result != null) {
 
-      /*final profilePictureBytes = result['profilePicture'];
-      File? profilePictureFile;
-
-      if (profilePictureBytes != null) {
-        try {
-          final tempDir = await getTemporaryDirectory();
-          final tempFilePath = '${tempDir.path}/profile_picture.jpg';
-          final tempFile = File(tempFilePath);
-
-          // Écrivez les bytes de l'image dans le fichier temporaire
-          await tempFile.writeAsBytes(Uint8List.fromList(profilePictureBytes));
-          profilePictureFile = tempFile;
-        } catch (e) {
-          print('Erreur lors de la création du fichier de photo de profil : $e');
-        }
-      }*/
 
       final user = User(
         email: result['email'],
         username: result['username'],
         password: result['password'],
-        //profilePicture: profilePictureFile,
+        profilePicture: result['profilePicture'],
       );
 
       loginUser(user); // Connecte l'utilisateur après la connexion réussie

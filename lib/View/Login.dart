@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_flutter/Controller/IdentificationController.dart';
 import 'package:project_flutter/View/partials/ForgottenPassword.dart';
@@ -53,6 +52,7 @@ class _LoginState extends State<Login> {
               ),
               Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const ForgottenPassword(),
                     TextButton(

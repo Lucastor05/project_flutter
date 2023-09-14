@@ -29,6 +29,7 @@ class _ForgottenPasswordState extends State<ForgottenPassword> {
                 content: Form(
                   key: _formKey,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextFormField(

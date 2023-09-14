@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_flutter/View/Home.dart';
 import 'package:project_flutter/View/Login.dart';
 import 'package:project_flutter/View/Register.dart';
+import 'package:project_flutter/View/Cours.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,13 +21,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey.shade900),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => const Login(title: 'Login'),
         '/register': (context) => const Register(title: 'Register'),
         '/home': (context) => const Home(title: 'Accueil'),
         '/competition': (context) => const Home(title: 'Concours'),
-        '/classes': (context) => const Home(title: 'Cours'),
+        '/classes': (context) => const Cours(title: 'Cours'),
         '/parties': (context) => const Home(title: 'Soirées'),
         '/horses': (context) => const Home(title: 'Chevaux'),
       },

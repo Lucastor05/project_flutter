@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 
+import 'package:project_flutter/Model/UserModel.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});
   final String title;
@@ -19,7 +21,6 @@ class _HomeState extends State<Home> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-
       bottomNavigationBar: NavBar(routes: ["competition", "classes", "parties", "horses"],),
     );
   }

@@ -109,7 +109,7 @@ class _RegisterState extends State<Register> {
                         emailController.text,
                         usernameController.text,
                         passwordController.text,
-                        _imageFile)) {
+                         _imageFile!.path)) {
                       Navigator.pushNamed(context, '/home');
                     } else {
                       const Text('Erreur lors du login');

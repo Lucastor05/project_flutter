@@ -3,7 +3,7 @@ import 'dart:io';
 
 class IdentificationController {
 
-  static Future<bool> RegisterUser(String email, String username, String password, File? profilePicture) async {
+  static Future<bool> RegisterUser(String email, String username, String password, String profilePicture) async {
 
     if (await UserManager.register(email, username, password, profilePicture)) {
       // Connecte automatiquement l'utilisateur après son inscription réussie

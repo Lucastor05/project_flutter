@@ -1,0 +1,24 @@
+import 'package:project_flutter/Model/CoursModel.dart';
+import 'dart:io';
+
+class CoursController {
+
+  static Future<bool> set(String terrain, DateTime date, String duree, String discipline) async {
+
+    if (await CoursManager.insertClasse(terrain, date, duree, discipline)){
+      // Connecte automatiquement l'utilisateur après son inscription réussie
+      return true;
+    } else {
+      print('Erreur lors de l\'insertion de la classe dans la base de données.');
+      return false;
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> get() async{
+    final cours = await CoursManager.getAllCours();
+    print(cours);
+    return cours;
+  }
+
+
+}

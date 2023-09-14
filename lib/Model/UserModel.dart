@@ -10,6 +10,7 @@ class User {
   late String profilePicture;
   String phone = "";
   int? age;
+  String role = "Cavalier";
 
 
   User({required this.email, required this.username, required this.password, required this.profilePicture});

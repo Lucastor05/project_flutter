@@ -38,7 +38,14 @@ class _CoursState extends State<Cours> {
         future: cours,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // Affichez un indicateur de chargement en attendant la résolution du Future
+            return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator()
+                  ],
+                )
+            );
           } else if (snapshot.hasError) {
             return Text('Erreur : ${snapshot.error}');
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

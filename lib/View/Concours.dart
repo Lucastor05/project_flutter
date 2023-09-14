@@ -39,12 +39,14 @@ class _ConcoursState extends State<Concours> {
           future: concours,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    CircularProgressIndicator()
-                  ]
-              ); // Affichez un indicateur de chargement en attendant la résolution du Future
+              return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator()
+                    ],
+                  )
+              );
             } else if (snapshot.hasError) {
               return Text('Erreur : ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -72,7 +74,7 @@ class _ConcoursState extends State<Concours> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Nom: ${coursData?[index]['name'] ?? ''}'),
+                                Text('Nom: ${coursData?[index]['nom'] ?? ''}'),
                                 Text('Adresse: ${coursData?[index]['adresse'] ?? ''}'),
                                 Text('Date : Le ${coursData?[index]['date']!.day}/${coursData?[index]['date']!.month}/${coursData?[index]['date']!.year} à ${coursData?[index]['date']!.hour}:${coursData?[index]['date']!.minute}'),
                                 TextButton(

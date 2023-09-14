@@ -38,4 +38,8 @@ class IdentificationController {
   static Future<List<Map<String, dynamic>>> getFromEmail(String email) async {
     return await UserManager.getFromEmail(email);
   }
+
+  static bool isGerant(){
+    return UserManager.currentUser?.role == "Gérant";
+  }
 }

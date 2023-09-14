@@ -8,12 +8,12 @@ class User {
   late String username;
   late String password;
   late String profilePicture;
+  late String role;
   String phone = "";
   int? age;
-  String role = "Cavalier";
 
 
-  User({required this.email, required this.username, required this.password, required this.profilePicture});
+  User({required this.role, required this.email, required this.username, required this.password, required this.profilePicture});
 }
 
 class UserManager {
@@ -84,10 +84,11 @@ class UserManager {
         'password': password,
         'profilePicture': profilePicturePath,
         'phone': "",
-        'age': null
+        'age': null,
+        'role': 'Cavalier'
       });
 
-      final user = User(email: email, username: username, password: password, profilePicture: profilePicturePath);
+      final user = User(role: "Cavalier",email: email, username: username, password: password, profilePicture: profilePicturePath);
       UserManager.loginUser(user);
 
       isRegistered = true; // Mettez à jour la variable en cas de succès
@@ -113,6 +114,7 @@ class UserManager {
 
 
       final user = User(
+        role: result['role'],
         email: result['email'],
         username: result['username'],
         password: result['password'],

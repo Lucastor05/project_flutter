@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_flutter/View/partials/NavBar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});
@@ -9,6 +10,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isNavBarVisible = false;
+
+  void toggleNavBar() {
+    setState(() {
+      isNavBarVisible = !isNavBarVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +26,15 @@ class _HomeState extends State<Home> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: toggleNavBar,
+        child: const Icon(Icons.menu),
+      ),
+
+      // Intégrer la barre de navigation ici conditionnellement en fonction de isNavBarVisible
+      body: isNavBarVisible ? const NavBar() : Container(),
     );
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_flutter/Controller/IdentificationController.dart';
-import 'package:project_flutter/View/ForgottenPassword.dart';
+import 'package:project_flutter/View/partials/ForgottenPassword.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});

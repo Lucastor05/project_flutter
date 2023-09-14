@@ -86,6 +86,7 @@ class UserManager {
 
     return isRegistered; // Renvoyez la variable booléenne
   }
+
   // Connecte un utilisateur avec son nom d'utilisateur et son mot de passe
   static Future<bool> loginUserWithCredentials(String username, String password) async {
     final db = await Database.connect();

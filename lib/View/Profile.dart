@@ -102,6 +102,20 @@ class _ProfileState extends State<Profile> {
                                       children: [
                                         Text('Nom: ${horsesData?[index]['nom'] ?? ''}'),
                                         Text('Age: ${horsesData?[index]['age'] ?? ''}'),
+                                        
+                                        /*GestureDetector(
+  onTap: () {
+    // Ouvrir le lien dans un navigateur
+    launch('https://www.example.com');
+  },
+  child: Text(
+    'https://www.example.com',
+    style: TextStyle(
+      decoration: TextDecoration.underline,
+      color: Colors.blue,
+    ),
+  ),
+),*/
                                         Row(
                                           children: [
                                             TextButton(

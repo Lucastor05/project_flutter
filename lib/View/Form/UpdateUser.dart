@@ -22,6 +22,7 @@ class _UpdateUserState extends State<UpdateUser> {
   TextEditingController ageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController FFEController = TextEditingController();
 
   File? _imageFile = File(UserController.getCurrentUser()!.profilePicture);
 
@@ -35,6 +36,7 @@ class _UpdateUserState extends State<UpdateUser> {
     ageController.text = currentUser?.age.toString() ?? '';
     emailController.text = currentUser?.email ?? '';
     phoneController.text = currentUser?.phone ?? '';
+    FFEController.text = currentUser?.phone ?? '';
   }
 
   @override
@@ -134,6 +136,42 @@ class _UpdateUserState extends State<UpdateUser> {
                     return null;
                   },
                 ),
+                TextFormField(
+                  controller: FFEController,
+                  decoration: const InputDecoration(
+                    labelText: 'URl FFE',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez saisir un lien vers votre compte FFE';
+                    }
+                    return null;
+                  },
+                ),/* TextFormField(
+              keyboardType: TextInputType.name,
+              autofocus: false,
+              controller: textEditingController,
+              decoration: InputDecoration(
+                labelText: ' Company Website ',
+                hintText: 'Enter the Company Website',
+                prefixIcon: IconButton(
+                  onPressed: () async {
+                    if(textEditingController.text.toString() == null || textEditingController.text.toString() == ""){
+                      print("null data");
+                    }else{
+                      print(textEditingController.text.toString());
+                      if (await canLaunch("https://" + textEditingController.text.toString())) {
+                        await launch("https://" + textEditingController.text.toString());
+                      } else {
+                        throw 'Could not launch ${textEditingController.text.toString()}';
+                      }
+                    }
+                  },
+                  icon: Icon(Icons.open_in_browser),
+                ),
+              ),
+              maxLength: 15,
+            ),,*/
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
@@ -145,6 +183,7 @@ class _UpdateUserState extends State<UpdateUser> {
                         int.tryParse(ageController.text) ?? 0,
                         emailController.text,
                         phoneController.text,
+                          FFEController.text
                       );
 
                       if (success) {

@@ -10,9 +10,10 @@ class User {
   late String role;
   late String phone;
   late int? age;
+  late String ffelink;
 
 
-  User({required this.role, required this.email, required this.username, required this.password, required this.profilePicture, required this.phone, required this.age});
+  User({required this.role, required this.email, required this.username, required this.password, required this.profilePicture, required this.phone, required this.age, required this.ffelink});
 }
 
 class UserManager {
@@ -84,10 +85,11 @@ class UserManager {
         'profilePicture': profilePicturePath,
         'phone': "",
         'age': null,
-        'role': 'Cavalier'
+        'role': 'Cavalier',
+        'ffelink':null
       });
 
-      final user = User(role: "Cavalier",email: email, username: username, password: password, profilePicture: profilePicturePath, phone: "", age: null);
+      final user = User(role: "Cavalier",email: email, username: username, password: password, profilePicture: profilePicturePath, phone: "", age: null, ffelink: "");
       UserManager.loginUser(user);
 
       isRegistered = true; // Mettez à jour la variable en cas de succès
@@ -120,6 +122,7 @@ class UserManager {
         profilePicture: result['profilePicture'],
         phone: result['phone'],
         age: result['age'],
+        ffelink: result['ffelink']
       );
 
       loginUser(user); // Connecte l'utilisateur après la connexion réussie
@@ -203,7 +206,7 @@ class UserManager {
     }
   }
 
-  static Future<bool> updateUser(String photoPath, String name, int? age, String email, String phone) async {
+  static Future<bool> updateUser(String photoPath, String name, int? age, String email, String phone, String ffelink) async {
     final db = await Database.connect();
     if (db == null) {
       print('La base de données n\'est pas connectée.');
@@ -238,6 +241,11 @@ class UserManager {
         where.eq('email',  _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
         modify.set('profilePicture', photoPath),
       );
+      await collection.update(
+        where.eq('email',  _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
+        modify.set('ffelink', ffelink),
+      );
+
 
       HorseController.updateOwner(_currentUser!.username, name);
 
@@ -247,6 +255,7 @@ class UserManager {
       _currentUser?.age = age;
       _currentUser?.phone = phone;
       _currentUser?.profilePicture = photoPath;
+      _currentUser?.ffelink = ffelink;
 
       return true;
     } catch (e) {

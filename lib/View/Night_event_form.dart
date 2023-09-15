@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //mport 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/night_controller.dart';
 import 'package:project_flutter/View/Form/Form_Night.dart';
+import 'dart:io';
 
 class Night extends StatefulWidget {
   const Night({super.key, required this.title});
@@ -62,8 +63,8 @@ class _NightState extends State<Night> {
                           Container(
                             width: 100,
                             height: 100,
-                            child: Image.asset(
-                              soireeData?[index]['photo'],
+                            child: Image.file(
+                              File(soireeData?[index]['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/night_controller.dart';
 import 'package:project_flutter/Controller/UserController.dart';
+import 'dart:io';
 
 class ParticipationNight extends StatefulWidget {
   const ParticipationNight({super.key, required this.idNight});
@@ -86,8 +87,8 @@ class _ParticipationNightState extends State<ParticipationNight> {
                           Container(
                             width: 100,
                             height: 100,
-                            child: Image.asset(
-                              nightData?['photo'],
+                            child: Image.file(
+                              File(nightData?['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),

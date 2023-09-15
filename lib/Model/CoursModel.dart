@@ -1,3 +1,5 @@
+import 'package:mongo_dart/mongo_dart.dart';
+
 import 'Database.dart';
 
 class CoursManager {
@@ -35,5 +37,25 @@ class CoursManager {
     var collection = db.collection("cours");
     var cours = await collection.find().toList();
     return cours;
+  }
+
+  static Future<bool> deleteFromId(String id) async{
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return false;
+    }
+
+    var collection = db.collection("cours");
+    var objectId = ObjectId.parse(id);
+
+    try {
+      await collection.remove(where.eq('_id', objectId));
+      print("Le cour a été supprimé");
+      return true;
+    } catch (e){
+      print("Erreur lors de la suppression : $e");
+      return false;
+    }
   }
 }

@@ -18,5 +18,14 @@ class CoursController {
     return cours;
   }
 
+  static Future<bool> deleteCours(String id) async{
+    if(await CoursManager.deleteFromId(id)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
 
 }

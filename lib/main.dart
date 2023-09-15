@@ -4,6 +4,8 @@ import 'package:project_flutter/View/Login.dart';
 import 'package:project_flutter/View/Register.dart';
 import 'package:project_flutter/View/Home.dart';
 import 'package:project_flutter/View/Night_event_form.dart';
+import 'package:project_flutter/View/Form/Form_Night.dart';
+import 'package:project_flutter/View/ParticipateNight.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,16 +31,21 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Night(title: 'Form'),
         '/register': (context) => const Register(title: 'Register'),
+        '/createSoiree': (context) => const CreateNight(title: 'Creer une soirée'),
+        '/soiree': (context) => const Night(title: 'Liste des soirées'),
+        //'/registerSoiree':(context)=>const ParticipationNight(title:'Register of night')
+
+
       },
-      /*onGenerateRoute: (settings) {
-        if (settings.name == '/register') {
+      onGenerateRoute: (settings) {
+        if (settings.name == '/registerSoiree') {
           final String argument = settings.arguments as String;
           return MaterialPageRoute(
-            builder: (context) => Register(title: argument),
+            builder: (context) => ParticipationNight(idNight: argument),
           );
         }
         return null;
-      },*/
+      },
     );
   }
 }

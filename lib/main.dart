@@ -3,6 +3,8 @@ import 'package:project_flutter/Model/Database.dart';
 import 'package:project_flutter/View/Login.dart';
 import 'package:project_flutter/View/Register.dart';
 import 'package:project_flutter/View/Home.dart';
+
+
 import 'package:project_flutter/View/Night_event_form.dart';
 import 'package:project_flutter/View/Form/Form_Night.dart';
 import 'package:project_flutter/View/ParticipateNight.dart';
@@ -33,7 +35,6 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const Register(title: 'Register'),
         '/createSoiree': (context) => const CreateNight(title: 'Creer une soirée'),
         '/soiree': (context) => const Night(title: 'Liste des soirées'),
-        //'/registerSoiree':(context)=>const ParticipationNight(title:'Register of night')
 
 
       },

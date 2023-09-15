@@ -5,7 +5,7 @@ import 'Database.dart';
 
 class NightManager {
 
-  static Future<bool> insertClasse(String name, String comment, DateTime date, String photo) async {
+  static Future<bool> insertClasse(String name, DateTime date, String photo) async {
     final db = await Database.connect();
     if (db == null) {
       print('La base de données n\'est pas connectée.');
@@ -17,7 +17,6 @@ class NightManager {
     try {
       await collection.insertOne({
         'name':name,
-        'comment': comment,
         'date': date,
         'photo': photo,
         'userList': [],
@@ -57,7 +56,7 @@ class NightManager {
     return soirees;
   }
 
-  static Future<bool> participate(String idSoiree) async {
+  static Future<bool> participate(String idSoiree, String comment) async {
     final db = await Database.connect();
     if (db == null) {
       print('La base de données n\'est pas connectée.');
@@ -81,8 +80,7 @@ class NightManager {
       int userIndex = userList.indexWhere((entry) => entry['userId'] == userEmail);
 
       if (userIndex != -1) {
-        // L'utilisateur est déjà enregistré, mettez à jour la difficulté
-
+        userList[userIndex]['comment'] = comment;
 
         // Mettez à jour la liste dans la base de données
         await collection.update(
@@ -95,7 +93,7 @@ class NightManager {
           where.eq('_id', objectId),
           modify.push('userList', {
             'userId': userEmail,
-
+            'comment': comment,
           }),
         );
       }
@@ -106,7 +104,25 @@ class NightManager {
     }
   }
 
+  static Future<bool> deleteFromId(String id) async{
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return false;
+    }
 
+    var collection = db.collection("soiree");
+    var objectId = ObjectId.parse(id);
+
+    try {
+      await collection.remove(where.eq('_id', objectId));
+      print("La soiree a été supprimé");
+      return true;
+    } catch (e){
+      print("Erreur lors de la suppression : $e");
+      return false;
+    }
+  }
 
 
 

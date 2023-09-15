@@ -63,7 +63,6 @@ class UserController {
   }
 
   static User? getCurrentUser(){
-    print(UserManager.currentUser);
     return UserManager.currentUser;
   }
 

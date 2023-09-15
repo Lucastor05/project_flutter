@@ -15,7 +15,6 @@ class CoursController {
 
   static Future<List<Map<String, dynamic>>> get() async{
     final cours = await CoursManager.getAllCours();
-    print(cours);
     return cours;
   }
 

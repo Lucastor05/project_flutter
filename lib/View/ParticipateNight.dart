@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/NightController.dart';
 import 'package:project_flutter/Controller/UserController.dart';
-import 'dart:io';
-
 import 'package:project_flutter/View/partials/NavBar.dart';
+import 'dart:io';
 
 class ParticipationNight extends StatefulWidget {
   const ParticipationNight({super.key, required this.idNight});
@@ -19,23 +17,19 @@ class _ParticipationNightState extends State<ParticipationNight> {
   late List<Map<String, dynamic>> userList = [];
 
   final _formKey = GlobalKey<FormState>();
-
+  final commentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Initialisez le futur pour obtenir les informations du concours
     initNight();
   }
 
-  // Méthode pour initialiser la connexion à la base de données
   Future<void> initNight() async {
     night = NightController.getOne(widget.idNight);
-    // Chargez la liste des utilisateurs inscrits dès le début
     await loadUserList();
   }
 
-  // Méthode pour charger la liste des utilisateurs inscrits
   Future<void> loadUserList() async {
     final nightData = await night;
     if (nightData != null) {
@@ -47,7 +41,7 @@ class _ParticipationNightState extends State<ParticipationNight> {
           userList.add(userData[0]);
         }
       }
-      setState(() {}); // Rafraîchir l'interface graphique après le chargement
+      setState(() {});
     }
   }
 
@@ -78,9 +72,6 @@ class _ParticipationNightState extends State<ParticipationNight> {
                   final nightData = snapshot.data!;
                   return Column(
                     children: [
-
-                      /* ----------- INFORMATION CONCOUR -----------*/
-
                       Text("Informations sur la soirée :"),
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       Row(
@@ -90,7 +81,7 @@ class _ParticipationNightState extends State<ParticipationNight> {
                             width: 100,
                             height: 100,
                             child: Image.file(
-                              File(nightData?['photo']),
+                              File(nightData['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -100,52 +91,30 @@ class _ParticipationNightState extends State<ParticipationNight> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${nightData['name']}'),
-                                Text('Le ${nightData?['date']!.day}/${nightData?['date']!.month}/${nightData?['date']!.year} à ${nightData?['date']!.hour}:${nightData?['date']!.minute}'),
+                                Text('Le ${nightData['date'].day}/${nightData['date'].month}/${nightData['date'].year} à ${nightData['date'].hour}:${nightData['date'].minute}'),
                               ],
                             ),
                           ),
                         ],
                       ),
                       const Padding(padding: EdgeInsets.only(bottom: 20)),
-
-                      /* ----------- INSCRIPTION Soirée -----------*/
-
-                      /*DropdownButtonFormField<String>(
-                        value: selectedDifficulty,
-                        hint: const Text('Sélectionnez une difficulté'),
-                        onChanged: (newValue) {
-                          setState(() {
-                            selectedDifficulty = newValue;
-                          });
-                        },
-                        items: <String>[
-                          'Amateur',
-                          'Club1',
-                          'Club2',
-                          'Club3',
-                          'Club4'
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                      TextFormField(
+                        controller: commentController,
+                        decoration: const InputDecoration(
+                          labelText: 'Commentaire sur la soirée',
+                        ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Veuillez sélectionner une difficulté';
+                            return 'Please write a comment';
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          labelText: 'Difficultés',
-                        ),
-                      ),*/
+                      ),
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       TextButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (await NightController.participate(
-                                widget.idNight)) {
+                            if (await NightController.participate(widget.idNight, commentController.text)) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Vous avez bien été enregistré')),
                               );
@@ -153,34 +122,43 @@ class _ParticipationNightState extends State<ParticipationNight> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content: Text('Erreur lors de l\'enregistrement, veuillez réessayer plus tard')),
+                                  content: Text('Erreur lors de l\'enregistrement, veuillez réessayer plus tard'),
+                                ),
                               );
                             }
                           }
                         },
                         child: const Text("Participer"),
                       ),
-
-                      /* ----------- LIST PARTICIPANT CONCOUR -----------*/
                       const Text("Utilisateurs inscrits :"),
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       SizedBox(
-                        height: 200, // Ajustez la hauteur en conséquence
+                        height: 200,
                         child: ListView.builder(
                           itemCount: userList.length,
                           itemBuilder: (context, index) {
                             final user = userList[index];
                             return Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey[200], // Couleur de fond de chaque liste
-                                borderRadius: BorderRadius.circular(10), // Bord arrondi
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               margin: const EdgeInsets.only(bottom: 15),
                               child: ListTile(
-                                title: Text(user['username']), // Nom d'utilisateur
-                                subtitle: Text(user['email']), // Adresse e-mail
-                                //trailing: Text(nightData['userList'][index]['difficulty']), // Difficulté
-                              ),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(user['username']), // Nom d'utilisateur
+                                    Text(user['email']), // Adresse e-mail
+                                  ],
+                                ),
+                                subtitle: Flexible(
+                                  child: Text(nightData['userList'][index]['comment'] ?? 'Aucun commentaire'),
+                                ),
+                              )
+
+
+
                             );
                           },
                         ),

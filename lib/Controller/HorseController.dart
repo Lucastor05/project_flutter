@@ -41,7 +41,6 @@ class HorseController {
 
   static Future<Map<String, dynamic>?> getOne(idConcour) async{
     final horse = await HorsesManager.getOneHorse(idConcour);
-    print(horse);
     return horse;
   }
 

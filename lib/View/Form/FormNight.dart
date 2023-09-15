@@ -21,7 +21,6 @@ class _CreateNightState extends State<CreateNight> {
   DateTime? selectedDate;
 
   final NameController=TextEditingController();
-  final CommmentController = TextEditingController();
 
   @override
 
@@ -80,19 +79,6 @@ class _CreateNightState extends State<CreateNight> {
 
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                TextFormField(
-                  controller: CommmentController,
-                  decoration: const InputDecoration(
-                    labelText: 'commentaire sur la soirée',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some Name text';
-                    }
-                    return null;
-                  },
-                ),
                 const Padding(padding: EdgeInsets.only(bottom: 15)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +138,6 @@ class _CreateNightState extends State<CreateNight> {
                     if (_formKey.currentState!.validate()) {
                       if (await NightController.set(
                         NameController.text,
-                        CommmentController.text,
                         selectedDate!,
                         _imageFile!.path,
                       )) {

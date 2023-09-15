@@ -74,7 +74,7 @@ class _ProfileState extends State<Profile> {
                   } else if (snapshot.hasError) {
                     return Text('Erreur : ${snapshot.error}');
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('Aucun cours disponible.');
+                    return const Text('Vous n\'avez pas de cheval');
                   } else {
                     final horsesData = snapshot.data;
                     return ListView.builder(

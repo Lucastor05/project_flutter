@@ -14,13 +14,11 @@ class ConcoursController {
 
   static Future<List<Map<String, dynamic>>> get() async{
     final concours = await ConcoursManager.getAllConcours();
-    print(concours);
     return concours;
   }
 
   static Future<Map<String, dynamic>?> getOne(idConcour) async{
     final concours = await ConcoursManager.getOneConcour(idConcour);
-    print(concours);
     return concours;
   }
 

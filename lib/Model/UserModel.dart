@@ -210,11 +210,6 @@ class UserManager {
       return false;
     }
 
-    if (await UserManager.checkUser(email, name)) {
-      print('Un utilisateur avec le même email ou nom d\'utilisateur existe déjà.');
-      return false;
-    }
-
     var collection = db.collection("users");
 
     try {

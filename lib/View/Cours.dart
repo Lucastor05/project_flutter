@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/CoursController.dart';
 
+import '../Controller/UserController.dart';
+
 
 class Cours extends StatefulWidget {
   const Cours({super.key, required this.title});
@@ -55,6 +57,7 @@ class _CoursState extends State<Cours> {
             return ListView.builder(
               itemCount: coursData?.length,
               itemBuilder: (BuildContext context, int index) {
+                final isGerant = UserController.isGerant();
                 return Card(
                   child: ListTile(
                     title: Text('Discipline: ${coursData?[index]['discipline'] ?? ''}'),
@@ -64,6 +67,26 @@ class _CoursState extends State<Cours> {
                         Text('Terrain: ${coursData?[index]['terrain'] ?? ''}'),
                         Text('Date : Le ${coursData?[index]['date']!.day}/${coursData?[index]['date']!.month}/${coursData?[index]['date']!.year} à ${coursData?[index]['date']!.hour}:${coursData?[index]['date']!.minute}'),
                         Text('Durée du cours: ${coursData?[index]['duree'] ?? ''}'),
+                        Row(
+                          children: [
+                            if (isGerant) // Affichez le bouton "Supprimer" uniquement si l'utilisateur est un gérant
+                              TextButton(
+                                onPressed: () async{
+                                  if(await CoursController.deleteCours(coursData?[index]['_id'].toHexString())){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Soiree supprimé')),
+                                    );
+                                    Navigator.pushNamed(context, '/soiree');
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Erreur lors de la suppression de la soiree')),
+                                    );
+                                  }
+                                },
+                                child: const Text('Supprimer'),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

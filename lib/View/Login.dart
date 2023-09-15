@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_flutter/Controller/UserController.dart';
-import 'package:project_flutter/View/partials/ForgottenPassword.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});
@@ -20,7 +19,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
@@ -52,12 +50,14 @@ class _LoginState extends State<Login> {
               ),
               Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const ForgottenPassword(),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Mot de passe oublié'),
+                    ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/register');
+                        Navigator.pushNamed(context, '/register', arguments: 'Ajouter un contact');
                       },
                       child: const Text('Register'),
                     ),
@@ -65,16 +65,8 @@ class _LoginState extends State<Login> {
                 ),
               ),
               TextButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    if(await UserController.login(usernameController.text, passwordController.text)){
-                      Navigator.pushNamed(context, '/home');
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Erreur lors du login')),
-                      );
-                    }
-                  }
+                onPressed: () {
+                  
                 },
                 child: const Text('Submit'),
               ),

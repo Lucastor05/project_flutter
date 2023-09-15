@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../Controller/IdentificationController.dart';
+import '../../Controller/UserController.dart';
 
 class ForgottenPassword extends StatefulWidget {
   const ForgottenPassword({super.key});
@@ -65,7 +65,7 @@ class _ForgottenPasswordState extends State<ForgottenPassword> {
                       TextButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            if(await IdentificationController.changePassword(emailController.text, usernameController.text, passwordController.text)){
+                            if(await UserController.changePassword(emailController.text, usernameController.text, passwordController.text)){
                               Navigator.of(context).pop();
                             } else {
                               const Text('Erreur lors du login');

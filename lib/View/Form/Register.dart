@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 
-import '../../Controller/IdentificationController.dart';
+import '../../Controller/UserController.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.title});
@@ -105,7 +105,7 @@ class _RegisterState extends State<Register> {
               TextButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    if (await IdentificationController.RegisterUser(
+                    if (await UserController.RegisterUser(
                         emailController.text,
                         usernameController.text,
                         passwordController.text,

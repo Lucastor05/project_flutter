@@ -87,7 +87,7 @@ class _NewCourState extends State<NewCour> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: NavBar(routes: const ["home", "classes", "parties", "horses"]),
+        bottomNavigationBar: NavBar(routes: const ["competition", "home", "parties", "horses", "cavalier"]),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),

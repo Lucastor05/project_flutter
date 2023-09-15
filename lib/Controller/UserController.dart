@@ -1,6 +1,6 @@
 import 'package:project_flutter/Model/UserModel.dart';
 
-class IdentificationController {
+class UserController {
 
   static Future<bool> RegisterUser(String email, String username, String password, String profilePicture) async {
 
@@ -38,7 +38,31 @@ class IdentificationController {
     return await UserManager.getFromEmail(email);
   }
 
+  static Future<List<Map<String, dynamic>>> getFromUsername(String username) async {
+    return await UserManager.getFromUsername(username);
+  }
+
+  static Future<bool> deleteFromEmail(String email) async {
+    if(await UserManager.deleteFromEmail(email)){
+      return true;
+    }
+    return false;
+  }
+
+  static void logout(){
+    UserManager.logoutUser();
+  }
+
+
+  static Future<List<Map<String, dynamic>>> get() async {
+    return await UserManager.get();
+  }
+
   static bool isGerant(){
     return UserManager.currentUser?.role == "Gérant";
+  }
+
+  static User? getCurrentUser(){
+    return UserManager.currentUser;
   }
 }

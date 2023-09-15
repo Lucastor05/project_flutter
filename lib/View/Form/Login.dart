@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_flutter/Controller/IdentificationController.dart';
+import 'package:project_flutter/Controller/UserController.dart';
 import 'package:project_flutter/View/partials/ForgottenPassword.dart';
 
 class Login extends StatefulWidget {
@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
               TextButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    if(await IdentificationController.login(usernameController.text, passwordController.text)){
+                    if(await UserController.login(usernameController.text, passwordController.text)){
                       Navigator.pushNamed(context, '/home');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

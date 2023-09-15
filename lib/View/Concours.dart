@@ -17,7 +17,7 @@ class _ConcoursState extends State<Concours> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: NavBar(routes: const ["home", "classes", "parties", "horses"]),
+      bottomNavigationBar: NavBar(routes: const ["home", "classes", "parties", "horses", "cavalier"]),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,

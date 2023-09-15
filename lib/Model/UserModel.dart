@@ -143,6 +143,18 @@ class UserManager {
     }
   }
 
+  static Future<List<Map<String, dynamic>>> get() async {
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return [];
+    }
+
+    var collection = db.collection("users");
+    var users = await collection.find().toList();
+    return users;
+  }
+
   static Future<List<Map<String, dynamic>>> getFromEmail(String email) async {
     final db = await Database.connect();
     if (db == null) {
@@ -153,5 +165,39 @@ class UserManager {
     var collection = db.collection("users");
     var user = await collection.find(where.eq('email', email)).toList();
     return user;
+  }
+
+  static Future<List<Map<String, dynamic>>> getFromUsername(String username) async {
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return [];
+    }
+
+    var collection = db.collection("users");
+    var user = await collection.find(where.eq('username', username)).toList();
+    return user;
+  }
+
+  static Future<bool> deleteFromEmail(String email) async {
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return false;
+    }
+
+    if(email == currentUser!.email){
+      return false;
+    }
+
+    var collection = db.collection("users");
+    try {
+      await collection.remove(where.eq('email', email));
+      print("L'utilisateur a été supprimé");
+      return true;
+    } catch (e){
+      print("Erreur lors de la suppression : $e");
+      return false;
+    }
   }
 }

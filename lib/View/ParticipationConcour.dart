@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/ConcoursController.dart';
-import 'package:project_flutter/Controller/IdentificationController.dart';
+import 'package:project_flutter/Controller/UserController.dart';
 
 class ParticipationConcours extends StatefulWidget {
   const ParticipationConcours({super.key, required this.idConcour});
@@ -39,7 +39,7 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
       final List<dynamic> users = concoursData['userList'];
       for (final user in users) {
         final userEmail = user['userId'];
-        final userData = await IdentificationController.getFromEmail(userEmail);
+        final userData = await UserController.getFromEmail(userEmail);
         if (userData.isNotEmpty) {
           userList.add(userData[0]);
         }
@@ -52,7 +52,7 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: NavBar(routes: const ["home", "classes", "parties", "horses"]),
+      bottomNavigationBar: NavBar(routes: const ["home", "classes", "parties", "horses", "cavalier"]),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Description du Concours'),

@@ -2,9 +2,9 @@ import 'package:project_flutter/Model/ConcoursModel.dart';
 
 class ConcoursController {
 
-  static Future<bool> set(String nom, String adresse, String photo, DateTime date) async {
+  static Future<bool> set(String nom, String adresse, String photo, DateTime date, List<String> list) async {
 
-    if (await ConcoursManager.insertConcour(nom, adresse, photo, date)){
+    if (await ConcoursManager.insertConcour(nom, adresse, photo, date, list)){
       return true;
     } else {
       print('Erreur lors de l\'insertion de la classe dans la base de données.');

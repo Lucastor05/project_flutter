@@ -49,6 +49,14 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
     }
   }
 
+  List<String> getDifficultyList(difficultyList) {
+    List<String> difficulties = [];
+    for (final difficulty in difficultyList) {
+      difficulties.add(difficulty);
+    }
+    return difficulties;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,13 +124,7 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                             selectedDifficulty = newValue;
                           });
                         },
-                        items: <String>[
-                          'Amateur',
-                          'Club1',
-                          'Club2',
-                          'Club3',
-                          'Club4'
-                        ].map((String value) {
+                        items: (getDifficultyList(concoursData['difficulties'])).map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -138,6 +140,7 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                           labelText: 'Difficultés',
                         ),
                       ),
+
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       TextButton(
                         onPressed: () async {

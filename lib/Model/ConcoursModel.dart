@@ -5,7 +5,7 @@ import 'Database.dart';
 
 class ConcoursManager {
 
-  static Future<bool> insertConcour(String nom, String adresse, String photo, DateTime date) async {
+  static Future<bool> insertConcour(String nom, String adresse, String photo, DateTime date, List<String> list) async {
     final db = await Database.connect();
     if (db == null) {
       print('La base de données n\'est pas connectée.');
@@ -21,6 +21,7 @@ class ConcoursManager {
         'photo' : photo,
         'date' : date,
         'userList' : [],
+        'difficulties' : list,
       });
       return true;
     } catch (e) {

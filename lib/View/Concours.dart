@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/ConcoursController.dart';
+import 'dart:io';
 
 class Concours extends StatefulWidget {
   const Concours({super.key, required this.title});
@@ -62,8 +63,8 @@ class _ConcoursState extends State<Concours> {
                           Container(
                             width: 100,
                             height: 100,
-                            child: Image.asset(
-                              coursData?[index]['photo'],
+                            child: Image.file(
+                              File(coursData?[index]['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),

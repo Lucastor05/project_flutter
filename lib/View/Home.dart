@@ -11,7 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +22,14 @@ class _HomeState extends State<Home> {
           IconButton(onPressed: (){
             UserController.logout();
             Navigator.pushNamed(context, '/');
-          }, icon: Icon(Icons.logout_outlined))
+          }, icon: Icon(Icons.logout_outlined)),
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, '/profile');
+          }, icon: Icon(Icons.supervised_user_circle))
         ],
       ),
       bottomNavigationBar: NavBar(routes: ["competition", "classes", "parties", "horses", "cavalier"]),
+      body: Text(UserController.getCurrentUser()!.username),
     );
   }
 }

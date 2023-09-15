@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/HorseController.dart';
 import 'package:project_flutter/Controller/UserController.dart';
+import 'dart:io';
 
 class DescriptifHorse extends StatefulWidget {
   const DescriptifHorse({super.key, required this.idConcour});
@@ -56,12 +57,6 @@ class _DescriptifHorseState extends State<DescriptifHorse> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Description du Cheval'),
-        actions: [
-          IconButton(
-            onPressed: (){}, icon:
-            const Icon(Icons.mode_edit_outline_rounded)
-          )
-        ],
 
     ),
       body: Center(
@@ -82,13 +77,20 @@ class _DescriptifHorseState extends State<DescriptifHorse> {
                   final concoursData = snapshot.data!;
                   return Column(
                     children: [
+                      if(concoursData['proprietaire'] == UserController.getCurrentUser()!.username)
+                      IconButton(
+                          onPressed: (){
+                            Navigator.pushNamed(context, '/updateHorse', arguments: concoursData["_id"].toHexString());
+                          },
+                          icon: const Icon(Icons.mode_edit_outline_rounded)
+                      ),
                       Expanded(
                         flex: 1,
                         child: ClipOval(
                           child: CircleAvatar(
                             radius: 80.0,
-                            child: Image.asset(
-                              concoursData['photo'],
+                            child: Image.file(
+                              File(concoursData['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -107,6 +109,7 @@ class _DescriptifHorseState extends State<DescriptifHorse> {
                       Text('Propriétaire : ${concoursData['proprietaire']}'),
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       Text('Spécialités : ${concoursData['specialite'].join(", ")}'),
+
                     ],
                   );
                 }

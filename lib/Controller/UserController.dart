@@ -63,6 +63,19 @@ class UserController {
   }
 
   static User? getCurrentUser(){
+    print(UserManager.currentUser);
     return UserManager.currentUser;
   }
+
+  static Future<bool> updateUser(String photoPath, String name, int age, String email, String phone) async{
+    if (await UserManager.updateUser(photoPath,name, age, email, phone)){
+    // Connecte automatiquement l'utilisateur après son inscription réussie
+    return true;
+    } else {
+    print('Erreur lors de l\'insertion de la classe dans la base de données.');
+    return false;
+    }
+  }
+
+
 }

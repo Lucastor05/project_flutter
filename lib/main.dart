@@ -11,6 +11,9 @@ import 'package:project_flutter/View/Cavalier.dart';
 import 'package:project_flutter/View/Horses.dart';
 import 'package:project_flutter/View/Form/NewHorse.dart';
 import 'package:project_flutter/View/DescriptifHorse.dart';
+import 'package:project_flutter/View/Form/UpdateHorse.dart';
+import 'package:project_flutter/View/Profile.dart';
+import 'package:project_flutter/View/Form/UpdateUser.dart';
 
 
 Future<void> main() async{
@@ -44,6 +47,8 @@ class MyApp extends StatelessWidget {
         '/createCours': (context) => const NewCour(title: 'Créer un concour'),
         '/createHorse': (context) => const NewHorse(title: 'Ajouter votre cheval'),
         '/cavalier': (context) => const Cavalier(title: 'Cavalier'),
+        '/profile': (context) => const Profile(title: 'Mon profile'),
+        '/updateUser': (context) => const UpdateUser(title: 'Mon profile'),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/registerConcours') {
@@ -58,6 +63,13 @@ class MyApp extends StatelessWidget {
             builder: (context) => DescriptifHorse(idConcour: argument),
           );
         }
+        if (settings.name == '/updateHorse') {
+          final String argument = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => UpdateHorse(id: argument),
+          );
+        }
+
         return null;
       },
     );

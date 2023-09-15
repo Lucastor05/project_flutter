@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_flutter/Model/UserModel.dart';
+import 'dart:io';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/HorseController.dart';
 import 'package:project_flutter/Controller/UserController.dart';
@@ -66,8 +66,8 @@ class _HorsesState extends State<Horses> {
                           Container(
                             width: 100,
                             height: 100,
-                            child: Image.asset(
-                              horsesData?[index]['photo'],
+                            child: Image.file(
+                              File(horsesData?[index]['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),

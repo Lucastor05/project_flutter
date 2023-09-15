@@ -13,11 +13,23 @@ class HorseController {
     }
   }
 
+  static Future<bool> update(String photoPath, String nom, int age, String robe, String race, String sexe, List<String> specialite, String id) async {
+
+    if (await HorsesManager.updateHorse(photoPath,nom, age, robe, race, sexe, specialite, id)){
+      // Connecte automatiquement l'utilisateur après son inscription réussie
+      return true;
+    } else {
+      print('Erreur lors de l\'insertion de la classe dans la base de données.');
+      return false;
+    }
+  }
+
   static Future<List<Map<String, dynamic>>> get() async{
     final cours = await HorsesManager.getAllHorses();
-    print(cours);
     return cours;
   }
+
+
 
   static Future<bool> deleteHorse(String idHorse) async{
     if(await HorsesManager.deleteFromId(idHorse)){
@@ -33,5 +45,8 @@ class HorseController {
     return horse;
   }
 
+  static Future<void> updateOwner(String oldUsername, String newUsername) async {
+    await HorsesManager.updateHorseOwner(oldUsername, newUsername);
+  }
 
 }

@@ -1,5 +1,5 @@
 import 'package:mongo_dart/mongo_dart.dart';
-
+import 'package:project_flutter/Controller/HorseController.dart';
 import 'Database.dart';
 
 class User {
@@ -8,11 +8,11 @@ class User {
   late String password;
   late String profilePicture;
   late String role;
-  String phone = "";
-  int? age;
+  late String phone;
+  late int? age;
 
 
-  User({required this.role, required this.email, required this.username, required this.password, required this.profilePicture});
+  User({required this.role, required this.email, required this.username, required this.password, required this.profilePicture, required this.phone, required this.age});
 }
 
 class UserManager {
@@ -87,7 +87,7 @@ class UserManager {
         'role': 'Cavalier'
       });
 
-      final user = User(role: "Cavalier",email: email, username: username, password: password, profilePicture: profilePicturePath);
+      final user = User(role: "Cavalier",email: email, username: username, password: password, profilePicture: profilePicturePath, phone: "", age: null);
       UserManager.loginUser(user);
 
       isRegistered = true; // Mettez à jour la variable en cas de succès
@@ -118,6 +118,8 @@ class UserManager {
         username: result['username'],
         password: result['password'],
         profilePicture: result['profilePicture'],
+        phone: result['phone'],
+        age: result['age'],
       );
 
       loginUser(user); // Connecte l'utilisateur après la connexion réussie
@@ -197,6 +199,58 @@ class UserManager {
       return true;
     } catch (e){
       print("Erreur lors de la suppression : $e");
+      return false;
+    }
+  }
+
+  static Future<bool> updateUser(String photoPath, String name, int? age, String email, String phone) async {
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return false;
+    }
+
+    if (await UserManager.checkUser(email, name)) {
+      print('Un utilisateur avec le même email ou nom d\'utilisateur existe déjà.');
+      return false;
+    }
+
+    var collection = db.collection("users");
+
+    try {
+      await collection.update(
+        where.eq('email',  _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
+        modify.set('username', name),
+      );
+      await collection.update(
+        where.eq('email', _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
+        modify.set('email', email),
+      );
+      await collection.update(
+        where.eq('email',  _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
+        modify.set('age', age),
+      );
+      await collection.update(
+        where.eq('email',  _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
+        modify.set('phone', phone),
+      );
+      await collection.update(
+        where.eq('email',  _currentUser!.email), // Utilisez where.eq pour spécifier le champ à mettre à jour
+        modify.set('profilePicture', photoPath),
+      );
+
+      HorseController.updateOwner(_currentUser!.username, name);
+
+      // Mettez à jour la session de l'utilisateur
+      _currentUser?.username = name;
+      _currentUser?.email = email;
+      _currentUser?.age = age;
+      _currentUser?.phone = phone;
+      _currentUser?.profilePicture = photoPath;
+
+      return true;
+    } catch (e) {
+      print(e);
       return false;
     }
   }

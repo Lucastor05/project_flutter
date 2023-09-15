@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_flutter/Model/UserModel.dart';
 import 'package:project_flutter/View/partials/NavBar.dart';
 import 'package:project_flutter/Controller/UserController.dart';
+import 'dart:io';
 
 class Cavalier extends StatefulWidget {
   const Cavalier({super.key, required this.title});
@@ -56,8 +57,8 @@ class _CavalierState extends State<Cavalier> {
                           Container(
                             width: 100,
                             height: 100,
-                            child: Image.asset(
-                              coursData?[index]['profilePicture'],
+                            child: Image.file(
+                              File(coursData?[index]['profilePicture']),
                               fit: BoxFit.cover,
                             ),
                           ),

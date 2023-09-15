@@ -3,6 +3,7 @@ import 'package:project_flutter/Model/Database.dart';
 import 'package:project_flutter/View/Login.dart';
 import 'package:project_flutter/View/Register.dart';
 import 'package:project_flutter/View/Home.dart';
+import 'package:project_flutter/View/Night_event_form.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/',
       routes: {
-        '/': (context) => const Home(title: 'Accueil'),
+        '/': (context) => const Night(title: 'Form'),
         '/register': (context) => const Register(title: 'Register'),
       },
       /*onGenerateRoute: (settings) {

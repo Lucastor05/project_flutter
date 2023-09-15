@@ -16,7 +16,7 @@ class _ParticipationNightState extends State<ParticipationNight> {
   late List<Map<String, dynamic>> userList = [];
 
   final _formKey = GlobalKey<FormState>();
-  //String? selectedDifficulty;
+
 
   @override
   void initState() {
@@ -96,7 +96,7 @@ class _ParticipationNightState extends State<ParticipationNight> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${nightData['nom']}'),
+                                Text('${nightData['name']}'),
                                 Text('Le ${nightData?['date']!.day}/${nightData?['date']!.month}/${nightData?['date']!.year} à ${nightData?['date']!.hour}:${nightData?['date']!.minute}'),
                               ],
                             ),

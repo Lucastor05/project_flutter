@@ -87,7 +87,6 @@ class _NightState extends State<Night> {
                       ),
                     ),
                   );
-
                 },
               );
             }

@@ -19,7 +19,7 @@ class _CavalierState extends State<Cavalier> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: NavBar(routes: const ["competition", "classes", "parties", "horses", "home"]),
+        bottomNavigationBar: NavBar(routes: const ["competition", "classes", "soiree", "horses", "home"]),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,

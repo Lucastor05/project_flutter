@@ -19,7 +19,7 @@ class _HorsesState extends State<Horses> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: NavBar(routes: const ["competition", "classes", "parties", "home", "cavalier"]),
+        bottomNavigationBar: NavBar(routes: const ["competition", "classes", "soiree", "home", "cavalier"]),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,

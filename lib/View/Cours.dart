@@ -19,7 +19,7 @@ class _CoursState extends State<Cours> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavBar(routes: ["competition", "home", "parties", "horses", "cavalier"],),
+      bottomNavigationBar: NavBar(routes: ["competition", "home", "soiree", "horses", "cavalier"],),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,

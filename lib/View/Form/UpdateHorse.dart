@@ -29,7 +29,6 @@ class _UpdateHorseState extends State<UpdateHorse> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: NavBar(routes: const ["competition", "classes", "parties", "home", "cavalier"]),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Modifier les informations'),

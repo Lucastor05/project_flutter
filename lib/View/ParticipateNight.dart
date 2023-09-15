@@ -1,43 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:project_flutter/View/partials/NavBar.dart';
-import 'package:project_flutter/Controller/ConcoursController.dart';
+//import 'package:project_flutter/View/partials/NavBar.dart';
+import 'package:project_flutter/Controller/NightController.dart';
 import 'package:project_flutter/Controller/UserController.dart';
 import 'dart:io';
 
-class ParticipationConcours extends StatefulWidget {
-  const ParticipationConcours({super.key, required this.idConcour});
-  final String idConcour;
+import 'package:project_flutter/View/partials/NavBar.dart';
+
+class ParticipationNight extends StatefulWidget {
+  const ParticipationNight({super.key, required this.idNight});
+  final String idNight;
 
   @override
-  State<ParticipationConcours> createState() => _ParticipationConcoursState();
+  State<ParticipationNight> createState() => _ParticipationNightState();
 }
 
-class _ParticipationConcoursState extends State<ParticipationConcours> {
-  late Future<Map<String, dynamic>?> concours;
+class _ParticipationNightState extends State<ParticipationNight> {
+  late Future<Map<String, dynamic>?> night;
   late List<Map<String, dynamic>> userList = [];
 
   final _formKey = GlobalKey<FormState>();
-  String? selectedDifficulty;
+
 
   @override
   void initState() {
     super.initState();
     // Initialisez le futur pour obtenir les informations du concours
-    initConcours();
+    initNight();
   }
 
   // Méthode pour initialiser la connexion à la base de données
-  Future<void> initConcours() async {
-    concours = ConcoursController.getOne(widget.idConcour);
+  Future<void> initNight() async {
+    night = NightController.getOne(widget.idNight);
     // Chargez la liste des utilisateurs inscrits dès le début
     await loadUserList();
   }
 
   // Méthode pour charger la liste des utilisateurs inscrits
   Future<void> loadUserList() async {
-    final concoursData = await concours;
-    if (concoursData != null) {
-      final List<dynamic> users = concoursData['userList'];
+    final nightData = await night;
+    if (nightData != null) {
+      final List<dynamic> users = nightData['userList'];
       for (final user in users) {
         final userEmail = user['userId'];
         final userData = await UserController.getFromEmail(userEmail);
@@ -53,9 +55,10 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      bottomNavigationBar: NavBar(routes: const ["home", "classes", "soiree", "horses", "cavalier"]),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Description du Concours'),
+        title: const Text('Description de la soirée'),
       ),
       body: Center(
         child: Padding(
@@ -63,22 +66,22 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
           child: Form(
             key: _formKey,
             child: FutureBuilder<Map<String, dynamic>?>(
-              future: concours,
+              future: night,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Erreur : ${snapshot.error}');
                 } else if (!snapshot.hasData) {
-                  return const Text('Aucune information sur le concours disponible.');
+                  return const Text('Aucune information sur la soirée disponible.');
                 } else {
-                  final concoursData = snapshot.data!;
+                  final nightData = snapshot.data!;
                   return Column(
                     children: [
 
                       /* ----------- INFORMATION CONCOUR -----------*/
 
-                      Text("Informations sur le concours :"),
+                      Text("Informations sur la soirée :"),
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +90,7 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                             width: 100,
                             height: 100,
                             child: Image.file(
-                              File(concoursData?['photo']),
+                              File(nightData?['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -96,9 +99,8 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${concoursData['nom']}'),
-                                Text('${concoursData['adresse']}'),
-                                Text('Le ${concoursData?['date']!.day}/${concoursData?['date']!.month}/${concoursData?['date']!.year} à ${concoursData?['date']!.hour}:${concoursData?['date']!.minute}'),
+                                Text('${nightData['name']}'),
+                                Text('Le ${nightData?['date']!.day}/${nightData?['date']!.month}/${nightData?['date']!.year} à ${nightData?['date']!.hour}:${nightData?['date']!.minute}'),
                               ],
                             ),
                           ),
@@ -106,9 +108,9 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                       ),
                       const Padding(padding: EdgeInsets.only(bottom: 20)),
 
-                      /* ----------- INSCRIPTION CONCOUR -----------*/
+                      /* ----------- INSCRIPTION Soirée -----------*/
 
-                      DropdownButtonFormField<String>(
+                      /*DropdownButtonFormField<String>(
                         value: selectedDifficulty,
                         hint: const Text('Sélectionnez une difficulté'),
                         onChanged: (newValue) {
@@ -137,17 +139,17 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                         decoration: const InputDecoration(
                           labelText: 'Difficultés',
                         ),
-                      ),
+                      ),*/
                       const Padding(padding: EdgeInsets.only(bottom: 15)),
                       TextButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (await ConcoursController.participate(
-                                selectedDifficulty!, widget.idConcour)) {
+                            if (await NightController.participate(
+                                widget.idNight)) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Vous avez bien été enregistré')),
                               );
-                              Navigator.pushNamed(context, '/competition');
+                              Navigator.pushNamed(context, '/registerSoiree', arguments: widget.idNight);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -177,14 +179,12 @@ class _ParticipationConcoursState extends State<ParticipationConcours> {
                               child: ListTile(
                                 title: Text(user['username']), // Nom d'utilisateur
                                 subtitle: Text(user['email']), // Adresse e-mail
-                                trailing: Text(concoursData['userList'][index]['difficulty']), // Difficulté
+                                //trailing: Text(nightData['userList'][index]['difficulty']), // Difficulté
                               ),
                             );
                           },
                         ),
                       ),
-
-
                     ],
                   );
                 }

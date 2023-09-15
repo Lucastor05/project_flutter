@@ -14,6 +14,9 @@ import 'package:project_flutter/View/DescriptifHorse.dart';
 import 'package:project_flutter/View/Form/UpdateHorse.dart';
 import 'package:project_flutter/View/Profile.dart';
 import 'package:project_flutter/View/Form/UpdateUser.dart';
+import 'package:project_flutter/View/NightEventForm.dart';
+import 'package:project_flutter/View/Form/FormNight.dart';
+import 'package:project_flutter/View/ParticipateNight.dart';
 
 
 Future<void> main() async{
@@ -49,6 +52,8 @@ class MyApp extends StatelessWidget {
         '/cavalier': (context) => const Cavalier(title: 'Cavalier'),
         '/profile': (context) => const Profile(title: 'Mon profile'),
         '/updateUser': (context) => const UpdateUser(title: 'Mon profile'),
+        '/createSoiree': (context) => const CreateNight(title: 'Creer une soirée'),
+        '/soiree': (context) => const Night(title: 'Liste des soirées'),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/registerConcours') {
@@ -67,6 +72,12 @@ class MyApp extends StatelessWidget {
           final String argument = settings.arguments as String;
           return MaterialPageRoute(
             builder: (context) => UpdateHorse(id: argument),
+          );
+        }
+        if (settings.name == '/registerSoiree') {
+          final String argument = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => ParticipationNight(idNight: argument),
           );
         }
 

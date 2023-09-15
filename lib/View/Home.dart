@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
           }, icon: Icon(Icons.supervised_user_circle))
         ],
       ),
-      bottomNavigationBar: NavBar(routes: ["competition", "classes", "parties", "horses", "cavalier"]),
+      bottomNavigationBar: NavBar(routes: ["competition", "classes", "soiree", "horses", "cavalier"]),
       body: Text(UserController.getCurrentUser()!.username),
     );
   }

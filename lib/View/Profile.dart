@@ -20,7 +20,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: NavBar(routes: const ["competition", "classes", "parties", "horses", "cavalier"]),
+      bottomNavigationBar: NavBar(routes: const ["home","competition", "classes", "soiree", "horses", "cavalier"]),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),

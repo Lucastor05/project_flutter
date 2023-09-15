@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:project_flutter/View/partials/NavBar.dart';
-import 'package:project_flutter/Controller/ConcoursController.dart';
+//mport 'package:project_flutter/View/partials/NavBar.dart';
+import 'package:project_flutter/Controller/NightController.dart';
+import 'package:project_flutter/View/Form/FormNight.dart';
 import 'dart:io';
 
-class Concours extends StatefulWidget {
-  const Concours({super.key, required this.title});
+class Night extends StatefulWidget {
+  const Night({super.key, required this.title});
   final String title;
 
   @override
-  State<Concours> createState() => _ConcoursState();
+  State<Night> createState() => _NightState();
 }
 
-class _ConcoursState extends State<Concours> {
-  Future<List<Map<String, dynamic>>> concours = ConcoursController.get();
+class _NightState extends State<Night> {
+  Future<List<Map<String, dynamic>>> night = NightController.get();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: NavBar(routes: const ["home", "classes", "soiree", "horses", "cavalier"]),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_box),
-            tooltip: 'Créer un cours',
-            onPressed: () {
-              Navigator.pushNamed(context, '/createConcours');
-            },
-          ),
-        ],
-      ),
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.add_box),
+              tooltip: 'Créer une soirée',
+              onPressed: () {
+                Navigator.pushNamed(context, '/createSoiree');
+              },
+            ),
+          ],
+        ),
 
         body: FutureBuilder<List<Map<String, dynamic>>>(
-          future: concours,
+          future: night,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -49,11 +49,11 @@ class _ConcoursState extends State<Concours> {
             } else if (snapshot.hasError) {
               return Text('Erreur : ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Text('Aucun cours disponible.');
+              return const Text('Aucune soirée disponible.');
             } else {
-              final coursData = snapshot.data;
+              final soireeData = snapshot.data;
               return ListView.builder(
-                itemCount: coursData?.length,
+                itemCount: soireeData?.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
@@ -64,7 +64,7 @@ class _ConcoursState extends State<Concours> {
                             width: 100,
                             height: 100,
                             child: Image.file(
-                              File(coursData?[index]['photo']),
+                              File(soireeData?[index]['photo']),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -73,12 +73,11 @@ class _ConcoursState extends State<Concours> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Nom: ${coursData?[index]['nom'] ?? ''}'),
-                                Text('Adresse: ${coursData?[index]['adresse'] ?? ''}'),
-                                Text('Date : Le ${coursData?[index]['date']!.day}/${coursData?[index]['date']!.month}/${coursData?[index]['date']!.year} à ${coursData?[index]['date']!.hour}:${coursData?[index]['date']!.minute}'),
+                                Text('Nom: ${soireeData?[index]['name'] ?? ''}'),
+                                Text('Date : Le ${soireeData?[index]['date']!.day}/${soireeData?[index]['date']!.month}/${soireeData?[index]['date']!.year} à ${soireeData?[index]['date']!.hour}:${soireeData?[index]['date']!.minute}'),
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/registerConcours', arguments: coursData?[index]['_id'].toHexString());
+                                    Navigator.pushNamed(context, '/registerSoiree', arguments: soireeData?[index]['_id'].toHexString());
                                   },
                                   child: const Text('Participer'),
                                 ),
@@ -89,7 +88,6 @@ class _ConcoursState extends State<Concours> {
                       ),
                     ),
                   );
-
                 },
               );
             }

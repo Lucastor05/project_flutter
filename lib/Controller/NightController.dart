@@ -38,4 +38,12 @@ class NightController {
     }
     return false;
   }
+
+  static Future<bool> validate(String id) async{
+    if(await NightManager.validate(id)){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

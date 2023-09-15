@@ -36,68 +36,118 @@ class _CoursState extends State<Cours> {
           ),
         ],
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: cours,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator()
-                  ],
-                )
-            );
-          } else if (snapshot.hasError) {
-            return Text('Erreur : ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text('Aucun cours disponible.');
-          } else {
-            final coursData = snapshot.data;
-            return ListView.builder(
-              itemCount: coursData?.length,
-              itemBuilder: (BuildContext context, int index) {
-                final isGerant = UserController.isGerant();
-                return Card(
-                  child: ListTile(
-                    title: Text('Discipline: ${coursData?[index]['discipline'] ?? ''}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Terrain: ${coursData?[index]['terrain'] ?? ''}'),
-                        Text('Date : Le ${coursData?[index]['date']!.day}/${coursData?[index]['date']!.month}/${coursData?[index]['date']!.year} à ${coursData?[index]['date']!.hour}:${coursData?[index]['date']!.minute}'),
-                        Text('Durée du cours: ${coursData?[index]['duree'] ?? ''}'),
-                        Row(
+        body: FutureBuilder<List<Map<String, dynamic>>>(
+          future: cours,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Text('Erreur : ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Text('Aucun cours disponible.');
+            } else {
+              final coursData = snapshot.data;
+
+              return ListView.builder(
+                itemCount: coursData?.length ?? 0,
+                itemBuilder: (BuildContext context, int index) {
+                  final isGerant = UserController.isGerant();
+                  final cours = coursData?[index];
+
+                  if (cours?['isValidated'] == true) {
+                    return Card(
+                      child: ListTile(
+                        title: Text('Discipline: ${cours?['discipline'] ?? ''}'),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (isGerant) // Affichez le bouton "Supprimer" uniquement si l'utilisateur est un gérant
-                              TextButton(
-                                onPressed: () async{
-                                  if(await CoursController.deleteCours(coursData?[index]['_id'].toHexString())){
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Soiree supprimé')),
-                                    );
-                                    Navigator.pushNamed(context, '/soiree');
-                                  }else{
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Erreur lors de la suppression de la soiree')),
-                                    );
-                                  }
-                                },
-                                child: const Text('Supprimer'),
-                              ),
+                            Text('Terrain: ${cours?['terrain'] ?? ''}'),
+                            Text('Date : Le ${cours?['date']!.day}/${cours?['date']!.month}/${cours?['date']!.year} à ${cours?['date']!.hour}:${cours?['date']!.minute}'),
+                            Text('Durée du cours: ${cours?['duree'] ?? ''}'),
+                            /*Row(
+                              children: [
+                                if (isGerant)
+                                  TextButton(
+                                    onPressed: () async {
+                                      if (await CoursController.deleteCours(cours?['_id'].toHexString())) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Soirée supprimée')),
+                                        );
+                                        Navigator.pushNamed(context, '/soiree');
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Erreur lors de la suppression de la soirée')),
+                                        );
+                                      }
+                                    },
+                                    child: const Text('Supprimer'),
+                                  ),
+                              ],
+                            ),*/
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                      ),
+                    );
+                  }else if(isGerant  && !cours?['isValidated']){
+                    if(isGerant){
+                      return Card(
+                        child: ListTile(
+                          title: Text('Discipline: ${cours?['discipline'] ?? ''}'),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Terrain: ${cours?['terrain'] ?? ''}'),
+                              Text('Date : Le ${cours?['date']!.day}/${cours?['date']!.month}/${cours?['date']!.year} à ${cours?['date']!.hour}:${cours?['date']!.minute}'),
+                              Text('Durée du cours: ${cours?['duree'] ?? ''}'),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      if (await CoursController.validate(cours?['_id'].toHexString())) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Soirée supprimée')),
+                                        );
+                                        Navigator.pushNamed(context, '/classes');
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Erreur lors de la suppression de la soirée')),
+                                        );
+                                      }
+                                    },
+                                    child: const Text('Valider'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      if (await CoursController.deleteCours(cours?['_id'].toHexString())) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Soirée supprimée')),
+                                        );
+                                        Navigator.pushNamed(context, '/soiree');
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Erreur lors de la suppression de la soirée')),
+                                        );
+                                      }
+                                    },
+                                    child: const Text('Supprimer'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                  return const SizedBox();
+                },
+              );
+            }
+          },
+        )
 
-
-              },
-            );
-          }
-        },
-      )
 
     );
   }

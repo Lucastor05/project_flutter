@@ -53,35 +53,35 @@ class HorsesManager {
           'proprietaire': UserManager.currentUser!.username
         }*/
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('nom', nom),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('age', age),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('robe', robe),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('race', race),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('sexe', sexe),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('specialite', specialite),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('proprietaire', UserManager.currentUser!.username),
       );
       await collection.updateOne(
-        where.id(ObjectId.fromHexString(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
+        where.id(ObjectId.parse(id)), // Utilisez where.id pour spécifier l'ID du document à mettre à jour
         modify.set('photo', photoPath),
       );
       return true;

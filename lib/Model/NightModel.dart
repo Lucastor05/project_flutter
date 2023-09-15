@@ -20,8 +20,7 @@ class NightManager {
         'date': date,
         'photo': photo,
         'userList': [],
-
-
+        'isValidated': false,
       });
       return true;
     } catch (e) {
@@ -122,6 +121,24 @@ class NightManager {
       print("Erreur lors de la suppression : $e");
       return false;
     }
+  }
+
+  static Future<bool> validate(String id) async{
+    final db = await Database.connect();
+    if (db == null) {
+      print('La base de données n\'est pas connectée.');
+      return false;
+    }
+
+    try{
+      var collection = db.collection("soiree");
+      await collection.updateOne(where.eq("_id", ObjectId.parse(id)), modify.set("isValidated", true));
+      return true;
+    } catch (e){
+      print("Erreur lors de la validation : $e");
+      return false;
+    }
+
   }
 
 

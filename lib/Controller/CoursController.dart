@@ -26,6 +26,12 @@ class CoursController {
     }
   }
 
-
+  static Future<bool> validate(String id) async{
+    if(await CoursManager.validate(id)){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }
